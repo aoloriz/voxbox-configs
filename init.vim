@@ -39,9 +39,13 @@ nnoremap <Leader>p "+p
 nnoremap <Leader>n :set nonumber!<CR>
 nnoremap <Leader>rn :set norelativenumber!<CR>
 
+" Mouse Integration
+set mouse=a
+
 "" BASIC LOOK CONFIGURATION
 "Enable syntax highlighting
 syntax on
+let python_highlight_all=1
 
 "Set shell as BASH
 set shell=/bin/bash
@@ -53,14 +57,15 @@ call minpac#init()
 
 " Managed plugins
 call minpac#add('k-takata/minpac', {'type': 'opt'})
+
 " Airline Statusbar
 call minpac#add('vim-airline/vim-airline')
 call minpac#add('vim-airline/vim-airline-themes')
 let g:airline#extensions#tabline#enabled=1
 
 " Code Folding
-" call minpac#add('tmhedberg/SimpylFold')
-" let g:SimpylFold_docstring_preview=1
+call minpac#add('tmhedberg/SimpylFold')
+let g:SimpylFold_docstring_preview=1
 
 " Syntax Checking
 call minpac#add('vim-syntastic/syntastic')
@@ -70,23 +75,44 @@ call minpac#add('scrooloose/nerdtree')
 nnoremap <C-n> :NERDTreeToggle<CR>
 
 " Code-completion engine
-call minpac#add('ycm-core/YouCompleteMe')
+call minpac#add('Shougo/deoplete.nvim')
+let g:deoplete#enable_at_startup = 1
+
+"*NEED TO FIX* call deoplete#custom#option({
+"    \ 'auto_complete_delay': 500,
+"    \ 'max_list': 50,
+"    \ })
+
+call minpac#add('deoplete-plugins/deoplete-jedi')
+let g:deoplete#sources#jedi#show_docstring = 1
+let g:deoplete#sources#jedi#enable_typeinfo = 0
+
+" Auto Python indentation
+call minpac#add('vim-scripts/indentpython.vim')
 
 " Plugin install and update
 command! Pu call minpac#update()
 command! Pc call minpac#clean()
 
 "" PEP indentation
-au BufNewFile,BufRead *.py
-	\set tabstop=4
-	\set softtabstop=4
-	\set shiftwidth=4
-	\set textwidth=79
-	\set expandtab
-	\set autoindent
-	\set fileformat=unix
-	\set encoding=utf-8
-	\call minpac#add('vim-scripts/indentpython.vim')
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
+set textwidth=79
+set expandtab
+set autoindent
+set fileformat=unix
+set encoding=utf-8
+
+"" COLOR SCHEME
+call minpac#add('jnurmine/Zenburn')
+call minpac#add('altercation/vim-colors-solarized')
+if has('gui_running')
+    set background=dark
+    colorscheme solarized
+else
+    colorscheme zenburn
+endif
 
 " For future consideration:
 " 1) Setup to recognize virtualenv
