@@ -67,8 +67,8 @@ let g:airline#extensions#tabline#enabled=1
 call minpac#add('tmhedberg/SimpylFold')
 let g:SimpylFold_docstring_preview=1
 
-" Syntax Checking
-call minpac#add('vim-syntastic/syntastic')
+" Syntax Checking  ***Need to install linters separately
+call minpac#add('dense-analysis/ale')
 
 " File Browsing from Vim
 call minpac#add('scrooloose/nerdtree')
